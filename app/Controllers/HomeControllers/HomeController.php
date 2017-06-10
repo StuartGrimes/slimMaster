@@ -9,18 +9,10 @@
 
 namespace App\Controllers\HomeControllers;
 
-use Slim\Views\Twig as View;
+use App\Controllers\BaseController;
 
-class HomeController
+class HomeController extends BaseController
 {
-
-    protected $view;
-
-    public function __construct(View $view)
-    {
-        $this->view = $view;
-    }
-
     public function index($request, $response)
     {
         return $this->view->render($response, 'home.twig');
