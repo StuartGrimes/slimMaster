@@ -10,18 +10,32 @@
 namespace App\Controllers\HomeControllers;
 
 use App\Controllers\BaseController;
+use App\Models\User;
 
-ini_set('display_errors', 1);
-ini_set('display_startup_errors', 1);
-error_reporting(E_ALL);
 
 class HomeController extends BaseController
 {
     public function index($request, $response)
     {
-        $user = $this->db->table('users')->find(1);
-        var_dump($user);
-        die();
+        /**
+         * below is just one way to do a query via your db property to mysql
+         **/
+//        $user = $this->db->table('users')->find(1);
+//        var_dump($user);
+        //die();
+        /**
+         * below is a way using the models class that is part of eloquent
+         */
+//        $user = User::where('email', 'stuartgrimes@me.com')->first();
+//        var_dump($user);
+//        die();
+
+        User::create([
+            'name'=>'Tanya',
+            'email'=>'tanyag@me.com',
+            'password'=> '123',
+        ]);
+
         return $this->view->render($response, 'home.twig');
     }
 }
