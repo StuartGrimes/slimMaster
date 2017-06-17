@@ -20,8 +20,12 @@ class BaseController
 
     public function __get($name)
     {
-        if ($this->container->{$name}){
+
+        if ($this->container->{$name}) {
             return $this->container->{$name};
+        } else {
+            throw new \Exception('Cannot find this property on Container.');
         }
+
     }
 }
