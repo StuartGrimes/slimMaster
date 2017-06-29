@@ -9,6 +9,7 @@
 namespace App\Controllers\Auth;
 
 use App\Controllers\BaseController;
+use App\Models\User;
 
 class AuthController extends BaseController
 {
@@ -19,7 +20,19 @@ class AuthController extends BaseController
 
     public function postSignUp($request, $response)
     {
-        //process the form
+        $user = User::create([
+            'email' => $request->getParam('email'),
+            'name' => $request->getParam('name'),
+            'password' => $request->getParam('password'),
+        ]);
+
+        return $response->withRedirect($this->router->pathFor('home'));
+//        $newResponse =  $response->withRedirect($this->router->pathFor('home'));
+//
+//        $headers = $newResponse->getHeaders();
+//        foreach ($headers as $key => $value){
+//            echo $key . ":" . implode(",", $value);
+//        }
     }
 
 }

@@ -5,8 +5,7 @@
  * Date: 08/06/2017
  * Time: 19:43
  */
-session_start();
-
+//session_start();
 require __DIR__ . '/../vendor/autoload.php';
 
  ini_set('display_errors', 1);
