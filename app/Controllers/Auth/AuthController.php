@@ -23,16 +23,12 @@ class AuthController extends BaseController
         $user = User::create([
             'email' => $request->getParam('email'),
             'name' => $request->getParam('name'),
-            'password' => password_hash($request->getParam('password'), PASSWORD_DEFAULT),
+            'password' => $request->getParam('password'),
         ]);
 
         return $response->withRedirect($this->router->pathFor('home'));
-//        $output = $request->getUri()->withPath($this->router->pathFor('home'));
-//        $strOutput = (string)$output;
-//        echo $strOutput;
-//        die;
 
-//        return $response->withRedirect((string)($request->getUri()->withPath($this->router->pathFor('home'))));
+
 
 
 //        $newResponse = $response->withRedirect((string)$this->router->pathFor('home'));
@@ -41,14 +37,13 @@ class AuthController extends BaseController
 //        return $newResponse;
 
 //        $status = $newResponse->getStatusCode();
-//
-//        echo $status;
 
+//
 //        $headers = $newResponse->getHeaders();
-//        foreach ($headers as $name => $values) {
-//            echo $name . ": " . implode($values);
+//        foreach ($headers as $key => $value){
+//            echo $key . ":" . implode(",", $value);
 //        }
-//return $newResponse;
+
     }
 
 }
