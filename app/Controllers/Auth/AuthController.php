@@ -26,12 +26,13 @@ class AuthController extends BaseController
             'password' => password_hash($request->getParam('password'), PASSWORD_DEFAULT),
         ]);
 
+        return $response->withRedirect($this->router->pathFor('home'));
 //        $output = $request->getUri()->withPath($this->router->pathFor('home'));
 //        $strOutput = (string)$output;
 //        echo $strOutput;
 //        die;
 
-        return $response->withRedirect((string)($request->getUri()->withPath($this->router->pathFor('home'))));
+//        return $response->withRedirect((string)($request->getUri()->withPath($this->router->pathFor('home'))));
 
 
 //        $newResponse = $response->withRedirect((string)$this->router->pathFor('home'));
@@ -47,7 +48,7 @@ class AuthController extends BaseController
 //        foreach ($headers as $name => $values) {
 //            echo $name . ": " . implode($values);
 //        }
-return $newResponse;
+//return $newResponse;
     }
 
 }
