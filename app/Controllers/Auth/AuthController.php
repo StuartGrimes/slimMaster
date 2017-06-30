@@ -33,6 +33,7 @@ class AuthController extends BaseController
 //        foreach ($headers as $key => $value){
 //            echo $key . ":" . implode(",", $value);
 //        }
+
     }
 
 }
