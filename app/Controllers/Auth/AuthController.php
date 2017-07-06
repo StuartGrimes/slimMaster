@@ -10,6 +10,7 @@ namespace App\Controllers\Auth;
 
 use App\Controllers\BaseController;
 use App\Models\User;
+use Respect\Validation\Validator as v;
 
 class AuthController extends BaseController
 {
@@ -20,6 +21,19 @@ class AuthController extends BaseController
 
     public function postSignUp($request, $response)
     {
+        $validation = $this->Validator->validate($request, [
+            'email'=> v::noWhitespace()->notEmpty()->email(),
+            'name' => v::notEmpty()->alpha(),
+            'password'=> v::noWhitespace()->notEmpty()
+        ]);
+
+        if ($validation->failed()){
+            //redirect back
+            return $response->withRedirect($this->router->pathFor('auth.signup'));
+
+            //create some middleware that will hold our errors and then pass them through to a view
+        }
+
         $user = User::create([
             'email' => $request->getParam('email'),
             'name' => $request->getParam('name'),

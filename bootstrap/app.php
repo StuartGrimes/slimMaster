@@ -1,4 +1,4 @@
- <?php
+<?php
 /**
  * Created by PhpStorm.
  * User: Stuart
@@ -9,8 +9,8 @@
 session_start();
 require __DIR__ . '/../vendor/autoload.php';
 
- ini_set('display_errors', 1);
- error_reporting(E_ALL);
+ini_set('display_errors', 1);
+error_reporting(E_ALL);
 
 require __DIR__ . '/../vendor/autoload.php';
 
@@ -18,14 +18,14 @@ $app = new \Slim\App([
     'settings' => [
         'displayErrorDetails' => true,
         'db' => [
-            'driver'=>'mysql',
-            'host'=>'localhost',
-            'database'=>'slimmaster',
-            'username'=>'root',
-            'password'=> 'root',
-            'charset'=> 'utf8',
-            'collation'=> 'utf8_unicode_ci',
-            'prefix'=>'',
+            'driver' => 'mysql',
+            'host' => 'localhost',
+            'database' => 'slimmaster',
+            'username' => 'root',
+            'password' => 'root',
+            'charset' => 'utf8',
+            'collation' => 'utf8_unicode_ci',
+            'prefix' => '',
         ]
     ]
 ]);
@@ -40,31 +40,37 @@ $capsule->setAsGlobal();
 
 $capsule->bootEloquent();
 
-$container['db'] = function ($container) use ($capsule){
+$container['db'] = function ($container) use ($capsule) {
     return $capsule;
 };
 
 
-$container['view'] = function($container){
-  $view = new Slim\Views\Twig(__DIR__ . '/../resources/views', [
-      'cache' => false,
-  ]);
+$container['view'] = function ($container) {
+    $view = new Slim\Views\Twig(__DIR__ . '/../resources/views', [
+        'cache' => false,
+    ]);
 
-  $view->addExtension(new Slim\Views\TwigExtension(
-      $container->router,
-      $container->request->getUri()
-  ));
+    $view->addExtension(new Slim\Views\TwigExtension(
+        $container->router,
+        $container->request->getUri()
+    ));
 
-  return $view;
+    return $view;
 };
 
-$container['AuthController'] = function($container){
+$container['AuthController'] = function ($container) {
     return new App\Controllers\Auth\AuthController($container);
 };
 
-$container['HomeController'] = function ($container){
+$container['HomeController'] = function ($container) {
     return new App\Controllers\HomeControllers\HomeController($container);
 };
+
+$container['Validator'] = function ($container) {
+    return new App\Validation\Validator();
+};
+
+$app->add(new \App\Middleware\ValidationErrorsMiddleware($container));
 
 require __DIR__ . '/../app/routes.php';
 
